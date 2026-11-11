@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#141213">
 <link rel="icon" href="avatar.png">
 <style>
-  :root { --bg:#141213; --card:#1f1b1a; --line:#3a2f2b; --fg:#fff4e2; --muted:#c9bfb1; --accent:#ff7433; --accent-ink:#141213; --ok:#3ccf7e; }
+  :root { --bg:#fff6dc; --card:#ffffff; --line:#f0d9a0; --fg:#1a1414; --muted:#5e5148; --accent:#e30613; --accent-ink:#ffffff; --yel:#ffd400; --ok:#119c4b; }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
@@ -28,7 +28,15 @@
   .lead { color:var(--muted); font-size:18px; margin:0 0 22px; }
   .cats { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px; padding:0; list-style:none; }
   .cats li { border:1px solid var(--line); border-radius:999px; padding:6px 12px; font-size:14px; }
-  .cta { display:flex; justify-content:space-between; align-items:center; gap:12px; background:var(--accent); color:var(--accent-ink); text-decoration:none; font-weight:900; font-size:20px; padding:18px 22px; border-radius:16px; }
+  .hero { background:var(--accent); color:#fff; padding-bottom:30px; border-radius:0 0 28px 28px; }
+  .hero .brand { border-color:rgba(255,255,255,.35); }
+  .hero .brand span { color:var(--yel); }
+  .hero h1 { color:#fff; }
+  .hero h1 em { color:var(--yel); }
+  .hero .lead { color:#ffe1e1; }
+  .hero .cats li { border-color:rgba(255,255,255,.4); }
+  .hero .note { color:#ffe1e1; }
+  .cta { display:flex; justify-content:space-between; align-items:center; gap:12px; background:var(--yel); color:#141213; text-decoration:none; font-weight:900; font-size:20px; padding:18px 22px; border-radius:16px; box-shadow:0 6px 0 #b38f00; }
   .cta:active { transform:scale(.99); }
   .cta small { display:block; font-weight:600; font-size:13px; opacity:.8; }
   .note { color:var(--muted); font-size:13px; margin:10px 2px 0; }
@@ -51,17 +59,16 @@
   summary { cursor:pointer; font-weight:700; }
   details p { color:var(--muted); margin:8px 0 2px; }
   footer { border-top:1px solid var(--line); padding:22px 0 90px; color:var(--muted); font-size:13px; }
-  .sticky { position:fixed; left:0; right:0; bottom:0; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:linear-gradient(transparent, var(--bg) 35%); }
+  .sticky { position:fixed; left:0; right:0; bottom:0; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:linear-gradient(transparent, var(--bg) 35%); transition:transform .25s; }
+  .sticky.hide { transform:translateY(120%); }
   .sticky .cta { max-width:608px; margin:0 auto; font-size:18px; padding:14px 18px; box-shadow:0 8px 30px rgba(0,0,0,.45); }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="hero"><div class="wrap">
   <header>
     <div class="brand"><img src="avatar.png" alt=""><b>DESCONTUDO</b><span>GRUPO GRÁTIS</span></div>
   </header>
-
-  <main>
     <h1>Vai repor a casa?<br>Confira as <em>promoções.</em></h1>
     <p class="lead">Fralda, sabão, papel higiênico e as compras do mês com desconto de verdade. A gente garimpa e manda no WhatsApp; você só escolhe o que vale a pena.</p>
     <ul class="cats"><li>🛒 Mercado</li><li>🧼 Limpeza</li><li>🧴 Higiene</li><li>🏠 Casa</li><li>👶 Bebês</li><li>🎟️ Cupons</li></ul>
@@ -70,7 +77,10 @@
       <span>ENTRAR NO GRUPO GRÁTIS<small>Abre direto no WhatsApp</small></span><span aria-hidden="true">→</span>
     </a>
     <p class="note">Só os administradores publicam. Você pode silenciar e sair quando quiser.</p>
+</div></div>
 
+<div class="wrap">
+  <main>
     <section>
       <h2>Já passou no grupo</h2>
       <div class="offers">
@@ -114,6 +124,13 @@
   </footer>
 </div>
 
-<div class="sticky"><a class="cta js-join" href="https://chat.whatsapp.com/BhrGNKO8cBX9LJgtOdZkdo" rel="noopener"><span>ENTRAR GRÁTIS NO WHATSAPP</span><span aria-hidden="true">→</span></a></div>
+<div class="sticky hide"><a class="cta js-join" href="https://chat.whatsapp.com/BhrGNKO8cBX9LJgtOdZkdo" rel="noopener"><span>ENTRAR GRÁTIS NO WHATSAPP</span><span aria-hidden="true">→</span></a></div>
+<script>
+  (function () {
+    var hero = document.querySelector('.hero .cta'), bar = document.querySelector('.sticky');
+    if (!('IntersectionObserver' in window)) { bar.classList.remove('hide'); return; }
+    new IntersectionObserver(function (e) { bar.classList.toggle('hide', e[0].isIntersecting); }).observe(hero);
+  })();
+</script>
 </body>
 </html>
